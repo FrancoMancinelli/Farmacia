@@ -42,6 +42,7 @@ public class FarmaciaView {
 	private JButton btnConfirPedido;
 	private JButton btnIncrementarPedido;
 	private JButton btnDisminuirPedido;
+	private int modo;
 
 	/**
 	 * Create the application.
@@ -106,6 +107,10 @@ public class FarmaciaView {
 		frame.getContentPane().add(btnPedido);
 		
 		btnVenta = new JButton("Venta");
+		btnVenta.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnVenta.setBounds(164, 246, 89, 23);
 		frame.getContentPane().add(btnVenta);
 		
@@ -207,29 +212,48 @@ public class FarmaciaView {
 		
 		btnPedido.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				modo = 1;
 				setPedidoON();
-				tfPedidoCant.setText("0");
 			}
 		});
 		
 		btnConfirPedido.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int confirmar = JOptionPane.showConfirmDialog(btnGuardarAct,
-						"¿Estás seguro de que deseas confirmar el pedido?");
-				if (confirmar == 0) { // Quiere confirmar
-					confirmarPedido();
+				if(modo == 1) {
+					int confirmar = JOptionPane.showConfirmDialog(btnGuardarAct,
+							"¿Estás seguro de que deseas confirmar el pedido?");
+					if (confirmar == 0) { // Quiere confirmar
+						confirmarPedido();
+					}
+				} else if (modo == 2) {
+					int confirmar = JOptionPane.showConfirmDialog(btnGuardarAct,
+							"¿Estás seguro de que deseas confirmar la venta?");
+					if (confirmar == 0) { // Quiere confirmar
+						confirmarVenta();
+					}
 				}
-				
 			}
 		});
 		
 		btnIncrementarPedido.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int a = Integer.parseInt(tfPedidoCant.getText());
-				a++;
-				tfPedidoCant.setText(String.valueOf(a));
-				if(a != 0) {
-					btnDisminuirPedido.setEnabled(true);
+				if(modo == 1) {
+					a++;
+					tfPedidoCant.setText(String.valueOf(a));
+					if(a != 0) {
+						btnDisminuirPedido.setEnabled(true);
+					}
+				} else if (modo == 2) {
+					a++;
+					tfPedidoCant.setText(String.valueOf(a));
+					if(a == Integer.parseInt(tfCantidad.getText())) {
+						btnIncrementarPedido.setEnabled(false);
+					}
+					
+					if(a != 0) {
+						btnDisminuirPedido.setEnabled(true);
+					}
 				}
 			}
 		});
@@ -237,14 +261,31 @@ public class FarmaciaView {
 		btnDisminuirPedido.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int a = Integer.parseInt(tfPedidoCant.getText());
-				if(a != 0) {
-					a--;
-					tfPedidoCant.setText(String.valueOf(a));
+				if(modo == 1) {
+					if(a != 0) {
+						a--;
+						tfPedidoCant.setText(String.valueOf(a));
+					}
+					if (a == 0) {
+						btnDisminuirPedido.setEnabled(false);
+					}
+				} else if (modo == 2) {
+					if(a != 0) {
+						a--;
+						tfPedidoCant.setText(String.valueOf(a));
+						btnIncrementarPedido.setEnabled(true);
+					}
+					if (a == 0) {
+						btnDisminuirPedido.setEnabled(false);
+					}
 				}
-				
-				if (a == 0) {
-					btnDisminuirPedido.setEnabled(false);
-				}
+			}
+		});
+		
+		btnVenta.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				modo = 2;
+				setPedidoON();
 			}
 		});
 	}
@@ -258,6 +299,12 @@ public class FarmaciaView {
 			tfPrecio.setText(String.valueOf(m.getPrecio()));
 			tfCantidad.setText(String.valueOf(m.getCantidad()));
 			tfPpioActivo.setText(m.getPpioActivo());
+			if(m.getCantidad() == 0) {
+				btnVenta.setEnabled(false);
+			} else {
+				btnVenta.setEnabled(true);
+			}
+			
 		}
 	}
 	
@@ -304,6 +351,7 @@ public class FarmaciaView {
 		btnIncrementarPedido.setVisible(false);
 		btnDisminuirPedido.setVisible(false);
 
+
 	}
 	
 	private void setActualizarON() {
@@ -324,6 +372,7 @@ public class FarmaciaView {
 	}
 	
 	private void setPedidoON() {
+		tfPedidoCant.setText("0");
 		tfNombreMed.setVisible(false);
 		tfFechaIncor.setVisible(false);
 		tfTipo.setVisible(false);
@@ -340,7 +389,7 @@ public class FarmaciaView {
 		btnGuardarAct.setVisible(false);
 		btnSalir.setVisible(false);
 		tfPedidoCant.setVisible(true);
-		tfPedidoCant.setEditable(true);
+		tfPedidoCant.setEditable(false);
 		btnConfirPedido.setVisible(true);
 		btnIncrementarPedido.setVisible(true);
 		btnDisminuirPedido.setVisible(true);
@@ -357,6 +406,7 @@ public class FarmaciaView {
 		m.setPpioActivo(tfPpioActivo.getText());
 		medicamentoDAO.updateMedicamento(m);
 		setPanelBase();
+		printPagina();
 	}
 	
 	private void confirmarPedido() {
@@ -366,5 +416,17 @@ public class FarmaciaView {
 		tfCantidad.setText(String.valueOf(Integer.parseInt(tfPedidoCant.getText())+Integer.parseInt(tfCantidad.getText())));
 		medicamentoDAO.updateCantidad(m);
 		setPanelBase();
+		printPagina();
 	}
+	
+	private void confirmarVenta() {
+		JOptionPane.showMessageDialog(btnConfirPedido, "La venta ha sido realizada con éxito");
+		Medicamento m = medicamentos.get(pagina);
+		m.setCantidad(Integer.parseInt(tfCantidad.getText())-Integer.parseInt(tfPedidoCant.getText()));
+		tfCantidad.setText(String.valueOf(Integer.parseInt(tfCantidad.getText())-Integer.parseInt(tfPedidoCant.getText())));
+		medicamentoDAO.updateCantidad(m);
+		setPanelBase();
+		printPagina();
+	}
+	
 } //CIERRE CLASE
