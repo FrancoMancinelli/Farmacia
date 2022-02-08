@@ -17,12 +17,14 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
+import javax.swing.JComboBox;
 
 public class FarmaciaView {
 
 	private JFrame frame;
 	private JTextField tfNombreMed;
 	private JTextField tfFechaIncor;
+	private JComboBox<String> cbTipo;
 	private JTextField tfTipo;
 	private JTextField tfPrecio;
 	private JTextField tfCantidad;
@@ -169,6 +171,15 @@ public class FarmaciaView {
 		btnDisminuirPedido.setBounds(260, 192, 65, 23);
 		frame.getContentPane().add(btnDisminuirPedido);
 		
+		cbTipo = new JComboBox<String>();
+		cbTipo.setBounds(42, 167, 86, 22);
+		frame.getContentPane().add(cbTipo);
+		cbTipo.addItem("-");
+		cbTipo.addItem("Pildoras");
+		cbTipo.addItem("Jarabe");
+		cbTipo.addItem("Pastillas");
+		cbTipo.addItem("Otro");
+
 	}
 	
 	private void setListeners() {
@@ -342,6 +353,7 @@ public class FarmaciaView {
 		tfNombreMed.setEditable(false);
 		tfFechaIncor.setEditable(false);
 		tfTipo.setEditable(false);
+		tfTipo.setVisible(true);
 		tfPrecio.setEditable(false);
 		tfCantidad.setEditable(false);
 		tfPpioActivo.setEditable(false);
@@ -364,14 +376,13 @@ public class FarmaciaView {
 		tfPpioActivo.setVisible(true);
 		btnIncrementarPedido.setVisible(false);
 		btnDisminuirPedido.setVisible(false);
-
+		cbTipo.setVisible(false);
 
 	}
 	
 	private void setActualizarON() {
 		tfNombreMed.setEditable(true);
-		tfFechaIncor.setEditable(true);
-		tfTipo.setEditable(true);
+		tfTipo.setVisible(false);
 		tfPrecio.setEditable(true);
 		tfPpioActivo.setEditable(true);
 		btnSiguiente.setVisible(false);
@@ -383,6 +394,8 @@ public class FarmaciaView {
 		btnCancelarAct.setVisible(true);
 		btnGuardarAct.setVisible(true);
 		btnSalir.setVisible(false);
+		cbTipo.setVisible(true);
+
 	}
 	
 	private void setPedidoON() {
@@ -414,7 +427,7 @@ public class FarmaciaView {
 		Medicamento m = medicamentos.get(pagina);
 		m.setNombre(tfNombreMed.getText());
 		m.setFechaIncorp(tfFechaIncor.getText());
-		m.setTipo(tfTipo.getText());
+		m.setTipo(cbTipo.getItemAt(cbTipo.getSelectedIndex()));
 		m.setPrecio(Double.parseDouble(tfPrecio.getText()));
 		m.setCantidad(Integer.parseInt(tfCantidad.getText()));
 		m.setPpioActivo(tfPpioActivo.getText());
@@ -443,7 +456,5 @@ public class FarmaciaView {
 		ventasDAO.nuevaVenta(v);
 		setPanelBase();
 		printPagina();
-		
 	}
-	
 } //CIERRE CLASE
