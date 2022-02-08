@@ -7,7 +7,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import dao.MedicamentoDAO;
+import dao.VentasDAO;
 import models.Medicamento;
+import models.Ventas;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -36,6 +38,7 @@ public class FarmaciaView {
 	private JFrame frameLogin;
 	private ArrayList<Medicamento> medicamentos;
 	private MedicamentoDAO medicamentoDAO;
+	private VentasDAO ventasDAO;
 	private JButton btnGuardarAct;
 	private JButton btnCancelarAct;
 	private JTextField tfPedidoCant;
@@ -61,6 +64,7 @@ public class FarmaciaView {
 		setListeners();
 		setPanelBase();
 		frame.setVisible(true);
+		this.ventasDAO = new VentasDAO();
 		this.medicamentoDAO = new MedicamentoDAO();
 		this.medicamentos = medicamentoDAO.getAll();
 		printPagina();
@@ -119,6 +123,10 @@ public class FarmaciaView {
 		frame.getContentPane().add(btnActualizar);
 		
 		btnVentaDia = new JButton("Ventas del Dia");
+		btnVentaDia.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnVentaDia.setBounds(135, 285, 133, 23);
 		frame.getContentPane().add(btnVentaDia);
 		
@@ -288,6 +296,12 @@ public class FarmaciaView {
 				setPedidoON();
 			}
 		});
+		
+		btnVentaDia.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(btnVentaDia, "Cantidad ventas totales: "+ ventasDAO.consultaVentas());
+			}
+		});
 	}
 	
 	private void printPagina() {
@@ -422,11 +436,14 @@ public class FarmaciaView {
 	private void confirmarVenta() {
 		JOptionPane.showMessageDialog(btnConfirPedido, "La venta ha sido realizada con éxito");
 		Medicamento m = medicamentos.get(pagina);
+		Ventas v = new Ventas(0, null, m, Integer.parseInt(tfPedidoCant.getText()));
 		m.setCantidad(Integer.parseInt(tfCantidad.getText())-Integer.parseInt(tfPedidoCant.getText()));
 		tfCantidad.setText(String.valueOf(Integer.parseInt(tfCantidad.getText())-Integer.parseInt(tfPedidoCant.getText())));
 		medicamentoDAO.updateCantidad(m);
+		ventasDAO.nuevaVenta(v);
 		setPanelBase();
 		printPagina();
+		
 	}
 	
 } //CIERRE CLASE

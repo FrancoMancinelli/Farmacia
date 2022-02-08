@@ -5,8 +5,9 @@ public class Ventas {
 	//Atributos
 	private int id;
 	private String fechaVenta;
-	private String medicamento;
+	private Medicamento medicamento;
 	private int cantidad;
+
 	
 	
 	/**
@@ -16,7 +17,7 @@ public class Ventas {
 	 * @param medicamento Nombre del medicamento vendido
 	 * @param cantidad Cantidades vendidas
 	 */
-	public Ventas(int id, String fechaVenta, String medicamento, int cantidad) {
+	public Ventas(int id, String fechaVenta, Medicamento medicamento, int cantidad) {
 		super();
 		this.id = id;
 		this.fechaVenta = fechaVenta;
@@ -42,11 +43,11 @@ public class Ventas {
 		this.fechaVenta = fechaVenta;
 	}
 
-	public String getMedicamento() {
+	public Medicamento getMedicamento() {
 		return medicamento;
 	}
 
-	public void setMedicamento(String medicamento) {
+	public void setMedicamento(Medicamento medicamento) {
 		this.medicamento = medicamento;
 	}
 
