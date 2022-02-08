@@ -58,4 +58,18 @@ public class MedicamentoDAO {
 			e.printStackTrace();
 		}
 	}
+	
+	public void updateCantidad (Medicamento m) {
+		final String UPDATE = "UPDATE farmacia.medicamento\r\n"
+				+ "SET\r\n"
+				+ "cantidad = '"+m.getCantidad()+"' \r\n"
+				+ "WHERE id = "+m.getId()+";";
+		try {
+			Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+			Statement stmt = conn.createStatement();
+			stmt.executeUpdate(UPDATE);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }

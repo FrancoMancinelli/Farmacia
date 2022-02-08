@@ -214,7 +214,12 @@ public class FarmaciaView {
 		
 		btnConfirPedido.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//tfPedidoCant.getText()
+				int confirmar = JOptionPane.showConfirmDialog(btnGuardarAct,
+						"¿Estás seguro de que deseas confirmar el pedido?");
+				if (confirmar == 0) { // Quiere confirmar
+					confirmarPedido();
+				}
+				
 			}
 		});
 		
@@ -351,6 +356,15 @@ public class FarmaciaView {
 		m.setCantidad(Integer.parseInt(tfCantidad.getText()));
 		m.setPpioActivo(tfPpioActivo.getText());
 		medicamentoDAO.updateMedicamento(m);
+		setPanelBase();
+	}
+	
+	private void confirmarPedido() {
+		JOptionPane.showMessageDialog(btnConfirPedido, "El pedido ha sido realizado con éxito y ya ha sido entregado");
+		Medicamento m = medicamentos.get(pagina);
+		m.setCantidad(Integer.parseInt(tfPedidoCant.getText())+Integer.parseInt(tfCantidad.getText()));
+		tfCantidad.setText(String.valueOf(Integer.parseInt(tfPedidoCant.getText())+Integer.parseInt(tfCantidad.getText())));
+		medicamentoDAO.updateCantidad(m);
 		setPanelBase();
 	}
 } //CIERRE CLASE
