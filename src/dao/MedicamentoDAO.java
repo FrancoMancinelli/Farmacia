@@ -15,6 +15,10 @@ public class MedicamentoDAO {
 	final String USER = "fran";
 	final String PASS = "#IltwwAmh3127";
 	
+	/**
+	 * Crea y rellena un ArrayList con los medicamentos registrados en la Base de Datos
+	 * @return El ArrayList con los medicamentos
+	 */
 	public ArrayList<Medicamento> getAll() {
 		final String QUERY = "SELECT id, nombre, ppio_activo, fecha, tipo, cantidad, precio"
 				+ " FROM medicamento ORDER BY nombre";
@@ -41,6 +45,10 @@ public class MedicamentoDAO {
 				return medicamentos;
 	}
 	
+	/**
+	 * Actualiza la información del medicamente seleccionado 
+	 * @param m El medicamento al que le actualizaremos los datos.
+	 */
 	public void updateMedicamento (Medicamento m) {
 		final String UPDATE = "UPDATE farmacia.medicamento\r\n"
 				+ "SET\r\n"
@@ -59,6 +67,10 @@ public class MedicamentoDAO {
 		}
 	}
 	
+	/**
+	 * Actualiza la cantidad de medicamentos en stock
+	 * @param m El medicamento al que acutalizaremos la cantidad
+	 */
 	public void updateCantidad (Medicamento m) {
 		final String UPDATE = "UPDATE farmacia.medicamento\r\n"
 				+ "SET\r\n"

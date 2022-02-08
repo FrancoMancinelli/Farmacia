@@ -64,7 +64,7 @@ public class FarmaciaView {
 	private JLabel lblFondo;
 
 	/**
-	 * Create the application.
+	 * Crea la aplicación.
 	 */
 	public FarmaciaView(JFrame loginView, int pagina) {
 		this.frameLogin = loginView;
@@ -73,7 +73,7 @@ public class FarmaciaView {
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * Inicializa el contenido del Frame.
 	 */
 	private void initialize() {
 		setUIComponents();
@@ -86,6 +86,9 @@ public class FarmaciaView {
 		printPagina();
 	}
 	
+	/**
+	 * Configura el diseño del Frame
+	 */
 	private void setUIComponents() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 557, 360);
@@ -137,10 +140,6 @@ public class FarmaciaView {
 		btnVenta = new JButton("Venta");
 		btnVenta.setBackground(Color.WHITE);
 		btnVenta.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 16));
-		btnVenta.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 		btnVenta.setBounds(203, 239, 130, 30);
 		frame.getContentPane().add(btnVenta);
 		
@@ -153,10 +152,6 @@ public class FarmaciaView {
 		btnVentaDia = new JButton("Ventas del Dia");
 		btnVentaDia.setBackground(Color.WHITE);
 		btnVentaDia.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 16));
-		btnVentaDia.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 		btnVentaDia.setBounds(186, 280, 160, 30);
 		frame.getContentPane().add(btnVentaDia);
 		
@@ -268,6 +263,7 @@ public class FarmaciaView {
 		frame.getContentPane().add(lblFondo);
 		lblFondo.setIcon(new ImageIcon(FarmaciaView.class.getResource("/img/fondoalmacen.jpg")));
 		
+		//Inserto los tipos al ComboBox
 		cbTipo.addItem("-");
 		cbTipo.addItem("Pildoras");
 		cbTipo.addItem("Jarabe");
@@ -276,12 +272,15 @@ public class FarmaciaView {
 
 	}
 	
+	/**
+	 * Configura las acciones de botones y de más
+	 */
 	private void setListeners() {
 		btnSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int confirmar = JOptionPane.showConfirmDialog(btnSalir,
 						"¿Estás seguro de que deseas salir?");
-				if (confirmar == 0) { // Quiere salir
+				if (confirmar == 0) { // Confirma salir
 					frameLogin.setVisible(true);
 					frame.dispose();
 				}
@@ -317,7 +316,7 @@ public class FarmaciaView {
 			public void actionPerformed(ActionEvent e) {
 				int confirmar = JOptionPane.showConfirmDialog(btnGuardarAct,
 						"¿Estás seguro de que deseas guardar los cambios?");
-				if (confirmar == 0) { // Quiere guardar
+				if (confirmar == 0) { // Confirma el guardado
 					guardarCambios();
 				}
 			}
@@ -332,16 +331,16 @@ public class FarmaciaView {
 		
 		btnConfirPedido.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(modo == 1) {
+				if(modo == 1) { //Si el modo es 1 = La función es de Pedido
 					int confirmar = JOptionPane.showConfirmDialog(btnGuardarAct,
 							"¿Estás seguro de que deseas confirmar el pedido?");
-					if (confirmar == 0) { // Quiere confirmar
+					if (confirmar == 0) { // Confirma el pedido
 						confirmarPedido();
 					}
-				} else if (modo == 2) {
+				} else if (modo == 2) {//Si el modo es 1 = La función es de Venta
 					int confirmar = JOptionPane.showConfirmDialog(btnGuardarAct,
 							"¿Estás seguro de que deseas confirmar la venta?");
-					if (confirmar == 0) { // Quiere confirmar
+					if (confirmar == 0) { // Confirma la venta
 						confirmarVenta();
 					}
 				}
@@ -351,22 +350,20 @@ public class FarmaciaView {
 		btnIncrementarPedido.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int a = Integer.parseInt(tfPedidoCant.getText());
-				if(modo == 1) {
+				if(modo == 1) { //Modo 1 = Modo Pedidos
 					a++;
 					tfPedidoCant.setText(String.valueOf(a));
-					if(a != 0) {
-						btnDisminuirPedido.setEnabled(true);
-					}
-				} else if (modo == 2) {
+					
+				} else if (modo == 2) { //Modo 2 = Modo Ventas
 					a++;
 					tfPedidoCant.setText(String.valueOf(a));
-					if(a == Integer.parseInt(tfCantidad.getText())) {
+					if(a == Integer.parseInt(tfCantidad.getText())) { //Si el valor es igual a la cantidad en stock
 						btnIncrementarPedido.setEnabled(false);
 					}
-					
-					if(a != 0) {
-						btnDisminuirPedido.setEnabled(true);
-					}
+				}
+				
+				if(a != 0) { //Si el valor no es 0, se podrá seguir decrementando
+					btnDisminuirPedido.setEnabled(true);
 				}
 			}
 		});
@@ -374,15 +371,15 @@ public class FarmaciaView {
 		btnDisminuirPedido.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int a = Integer.parseInt(tfPedidoCant.getText());
-				if(modo == 1) {
+				if(modo == 1) { //Modo 1 = Modo Pedidos
 					if(a != 0) {
 						a--;
 						tfPedidoCant.setText(String.valueOf(a));
 					}
-					if (a == 0) {
+					if (a == 0) { //Si el valor es 0, no se podrá seguir decrementando
 						btnDisminuirPedido.setEnabled(false);
 					}
-				} else if (modo == 2) {
+				} else if (modo == 2) { //Modo 2 = Modo Ventas
 					if(a != 0) {
 						a--;
 						tfPedidoCant.setText(String.valueOf(a));
@@ -409,6 +406,9 @@ public class FarmaciaView {
 		});
 	}
 	
+	/**
+	 * Imprime los datos del medicamento de la pagina actual
+	 */
 	private void printPagina() {
 		if(medicamentos.size() > 0) {
 			Medicamento m = medicamentos.get(pagina);
@@ -427,6 +427,9 @@ public class FarmaciaView {
 		}
 	}
 	
+	/**
+	 * Imprime el siguiente formulario de manera circular
+	 */
 	private void printSiguiente() {
 		pagina++;
 		if(pagina == medicamentos.size()) {
@@ -435,6 +438,9 @@ public class FarmaciaView {
 		printPagina();
 	}
 	
+	/**
+	 *Imprime el anterior formulario de manera circular
+	 */
 	private void printAnterior() {
 		pagina--;
 		if(pagina < 0) {
@@ -443,6 +449,9 @@ public class FarmaciaView {
 		printPagina();
 	}
 	
+	/**
+	 * Configura la UI al estado Base de inicio
+	 */
 	private void setPanelBase() {
 		tfNombreMed.setEditable(false);
 		tfFechaIncor.setEditable(false);
@@ -480,6 +489,9 @@ public class FarmaciaView {
 		lblTextIndica.setVisible(false);
 	}
 	
+	/**
+	 * Configura el diseño e interfaz del panel en modo Actualizar
+	 */
 	private void setActualizarON() {
 		tfNombreMed.setEditable(true);
 		tfTipo.setVisible(false);
@@ -498,6 +510,9 @@ public class FarmaciaView {
 		
 	}
 	
+	/**
+	 * Configura el diseño e interfaz del panel en modo Pedido
+	 */
 	private void setPedidoON() {
 		tfPedidoCant.setText("0");
 		tfNombreMed.setVisible(false);
@@ -530,6 +545,9 @@ public class FarmaciaView {
 		lblTextIndica.setVisible(true);
 	}
 	
+	/**
+	 * Guarda los cambios realizados en los TextFields y devuelve a la vista principal
+	 */
 	private void guardarCambios() {
 		Medicamento m = medicamentos.get(pagina);
 		m.setNombre(tfNombreMed.getText());
@@ -543,6 +561,10 @@ public class FarmaciaView {
 		printPagina();
 	}
 	
+	/**
+	 * Modifica la cantidad de Stock sumando la cantidad pedida,
+	 * reimprime el valor actual y devuelve a la vista principal
+	 */
 	private void confirmarPedido() {
 		JOptionPane.showMessageDialog(btnConfirPedido, "El pedido ha sido realizado con éxito y ya ha sido entregado");
 		Medicamento m = medicamentos.get(pagina);
@@ -553,6 +575,10 @@ public class FarmaciaView {
 		printPagina();
 	}
 	
+	/**
+	 * Modifica la cantidad de Stock restando la cantidad vendida,
+	 * reimprime el valor actual y devuelve a la vista principal
+	 */
 	private void confirmarVenta() {
 		JOptionPane.showMessageDialog(btnConfirPedido, "La venta ha sido realizada con éxito");
 		Medicamento m = medicamentos.get(pagina);
@@ -564,4 +590,5 @@ public class FarmaciaView {
 		setPanelBase();
 		printPagina();
 	}
+	
 } //CIERRE CLASE

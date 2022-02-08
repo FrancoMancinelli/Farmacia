@@ -34,7 +34,7 @@ public class LoginView {
 
 
 	/**
-	 * Create the application.
+	 * Crea la aplicación
 	 */
 	public LoginView() {
 		initialize();
@@ -44,13 +44,16 @@ public class LoginView {
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * Inicializa el contenido del Frame.
 	 */
 	private void initialize() {
 		setUIComponents();
 		setListeners();
 	}
 	
+	/**
+	 * Configura el diseño del Frame
+	 */
 	private void setUIComponents() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 468, 346);
@@ -87,6 +90,9 @@ public class LoginView {
 
 	}
 	
+	/**
+	 * Configura las acciones de botones y de más
+	 */
 	private void setListeners() {
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

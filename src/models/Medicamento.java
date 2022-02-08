@@ -11,6 +11,7 @@ public class Medicamento {
 	private int cantidad;
 	private double precio;
 	
+	//Constructores
 	/**
 	 * Construye un medicamento
 	 * @param nombre Nombre del medicamento

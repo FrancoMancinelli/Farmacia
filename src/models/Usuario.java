@@ -6,7 +6,7 @@ public class Usuario {
 	private int id;
 	private String pin;
 	
-	
+	//Constructores
 	/**
 	 * Construye un usuario
 	 * @param id ID del usuario

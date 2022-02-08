@@ -9,7 +9,7 @@ public class Ventas {
 	private int cantidad;
 
 	
-	
+	//Constructores
 	/**
 	 * Construye una venta
 	 * @param id ID de la venta
