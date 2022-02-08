@@ -40,4 +40,22 @@ public class MedicamentoDAO {
 		      }
 				return medicamentos;
 	}
+	
+	public void updateMedicamento (Medicamento m) {
+		final String UPDATE = "UPDATE farmacia.medicamento\r\n"
+				+ "SET\r\n"
+				+ "nombre = '"+m.getNombre()+"',\r\n"
+				+ "fecha = '"+m.getFechaIncorp()+"',\r\n"
+				+ "tipo = '"+m.getTipo()+"',\r\n"
+				+ "precio = '"+m.getPrecio()+"',\r\n"
+				+ "cantidad = '"+m.getCantidad()+"' \r\n"
+				+ "WHERE id = "+m.getId()+";";
+		try {
+			Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+			Statement stmt = conn.createStatement();
+			stmt.executeUpdate(UPDATE);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }

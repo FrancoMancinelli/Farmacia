@@ -34,6 +34,8 @@ public class FarmaciaView {
 	private JFrame frameLogin;
 	private ArrayList<Medicamento> medicamentos;
 	private MedicamentoDAO medicamentoDAO;
+	private JButton btnGuardarAct;
+	private JButton btnCancelarAct;
 
 	/**
 	 * Create the application.
@@ -50,6 +52,7 @@ public class FarmaciaView {
 	private void initialize() {
 		setUIComponents();
 		setListeners();
+		setActualizarOFF();
 		frame.setVisible(true);
 		this.medicamentoDAO = new MedicamentoDAO();
 		this.medicamentos = medicamentoDAO.getAll();
@@ -120,6 +123,14 @@ public class FarmaciaView {
 		btnSiguiente.setBounds(335, 192, 89, 23);
 		frame.getContentPane().add(btnSiguiente);
 		
+		btnGuardarAct = new JButton("Guardar");
+		btnGuardarAct.setBounds(305, 285, 89, 23);
+		frame.getContentPane().add(btnGuardarAct);
+		
+		btnCancelarAct = new JButton("Cancelar");
+		btnCancelarAct.setBounds(36, 280, 89, 23);
+		frame.getContentPane().add(btnCancelarAct);
+		
 	}
 	
 	private void setListeners() {
@@ -143,6 +154,26 @@ public class FarmaciaView {
 		btnSiguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				printSiguiente();
+			}
+		});
+		
+		btnActualizar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setActualizarON();		
+			}
+		});
+		
+		btnCancelarAct.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setActualizarOFF();
+				printPagina();
+			}
+		});
+		
+		btnGuardarAct.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				guardarCambios();
+				setActualizarOFF();
 			}
 		});
 	}
@@ -175,7 +206,47 @@ public class FarmaciaView {
 		printPagina();
 	}
 	
-	private void printVacio() {
-		
+	private void setActualizarOFF() {
+		tfNombreMed.setEditable(false);
+		tfFechaIncor.setEditable(false);
+		tfTipo.setEditable(false);
+		tfPrecio.setEditable(false);
+		tfCantidad.setEditable(false);
+		tfPpioActivo.setEditable(false);
+		btnSiguiente.setVisible(true);
+		btnAnterior.setVisible(true);
+		btnActualizar.setVisible(true);
+		btnPedido.setVisible(true);
+		btnVenta.setVisible(true);
+		btnVentaDia.setVisible(true);
+		btnCancelarAct.setVisible(false);
+		btnGuardarAct.setVisible(false);
+	}
+	
+	private void setActualizarON() {
+		tfNombreMed.setEditable(true);
+		tfFechaIncor.setEditable(true);
+		tfTipo.setEditable(true);
+		tfPrecio.setEditable(true);
+		tfPpioActivo.setEditable(true);
+		btnSiguiente.setVisible(false);
+		btnAnterior.setVisible(false);
+		btnActualizar.setVisible(false);
+		btnPedido.setVisible(false);
+		btnVenta.setVisible(false);
+		btnVentaDia.setVisible(false);
+		btnCancelarAct.setVisible(true);
+		btnGuardarAct.setVisible(true);
+	}
+	
+	private void guardarCambios() {
+		Medicamento m = medicamentos.get(pagina);
+		m.setNombre(tfNombreMed.getText());
+		m.setFechaIncorp(tfFechaIncor.getText());
+		m.setTipo(tfTipo.getText());
+		m.setPrecio(Double.parseDouble(tfPrecio.getText()));
+		m.setCantidad(Integer.parseInt(tfCantidad.getText()));
+		m.setPpioActivo(tfPpioActivo.getText());
+		medicamentoDAO.updateMedicamento(m);
 	}
 } //CIERRE CLASE
