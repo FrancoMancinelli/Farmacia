@@ -11,6 +11,8 @@ import models.Medicamento;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
@@ -36,6 +38,10 @@ public class FarmaciaView {
 	private MedicamentoDAO medicamentoDAO;
 	private JButton btnGuardarAct;
 	private JButton btnCancelarAct;
+	private JTextField tfPedidoCant;
+	private JButton btnConfirPedido;
+	private JButton btnIncrementarPedido;
+	private JButton btnDisminuirPedido;
 
 	/**
 	 * Create the application.
@@ -52,7 +58,7 @@ public class FarmaciaView {
 	private void initialize() {
 		setUIComponents();
 		setListeners();
-		setActualizarOFF();
+		setPanelBase();
 		frame.setVisible(true);
 		this.medicamentoDAO = new MedicamentoDAO();
 		this.medicamentos = medicamentoDAO.getAll();
@@ -131,6 +137,25 @@ public class FarmaciaView {
 		btnCancelarAct.setBounds(36, 280, 89, 23);
 		frame.getContentPane().add(btnCancelarAct);
 		
+		tfPedidoCant = new JTextField();
+		tfPedidoCant.setEditable(false);
+		tfPedidoCant.setText("0");
+		tfPedidoCant.setBounds(167, 193, 86, 20);
+		frame.getContentPane().add(tfPedidoCant);
+		tfPedidoCant.setColumns(10);
+		
+		btnConfirPedido = new JButton("Confirmar");
+		btnConfirPedido.setBounds(240, 267, 89, 23);
+		frame.getContentPane().add(btnConfirPedido);
+		
+		btnIncrementarPedido = new JButton("+");
+		btnIncrementarPedido.setBounds(109, 192, 54, 23);
+		frame.getContentPane().add(btnIncrementarPedido);
+		
+		btnDisminuirPedido = new JButton("-");
+		btnDisminuirPedido.setBounds(260, 192, 65, 23);
+		frame.getContentPane().add(btnDisminuirPedido);
+		
 	}
 	
 	private void setListeners() {
@@ -165,7 +190,7 @@ public class FarmaciaView {
 		
 		btnCancelarAct.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setActualizarOFF();
+				setPanelBase();
 				printPagina();
 			}
 		});
@@ -176,7 +201,44 @@ public class FarmaciaView {
 						"¿Estás seguro de que deseas guardar los cambios?");
 				if (confirmar == 0) { // Quiere guardar
 					guardarCambios();
-					setActualizarOFF();
+				}
+			}
+		});
+		
+		btnPedido.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setPedidoON();
+				tfPedidoCant.setText("0");
+			}
+		});
+		
+		btnConfirPedido.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//tfPedidoCant.getText()
+			}
+		});
+		
+		btnIncrementarPedido.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int a = Integer.parseInt(tfPedidoCant.getText());
+				a++;
+				tfPedidoCant.setText(String.valueOf(a));
+				if(a != 0) {
+					btnDisminuirPedido.setEnabled(true);
+				}
+			}
+		});
+		
+		btnDisminuirPedido.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int a = Integer.parseInt(tfPedidoCant.getText());
+				if(a != 0) {
+					a--;
+					tfPedidoCant.setText(String.valueOf(a));
+				}
+				
+				if (a == 0) {
+					btnDisminuirPedido.setEnabled(false);
 				}
 			}
 		});
@@ -210,7 +272,7 @@ public class FarmaciaView {
 		printPagina();
 	}
 	
-	private void setActualizarOFF() {
+	private void setPanelBase() {
 		tfNombreMed.setEditable(false);
 		tfFechaIncor.setEditable(false);
 		tfTipo.setEditable(false);
@@ -225,6 +287,18 @@ public class FarmaciaView {
 		btnVentaDia.setVisible(true);
 		btnCancelarAct.setVisible(false);
 		btnGuardarAct.setVisible(false);
+		btnSalir.setVisible(true);
+		tfPedidoCant.setVisible(false);
+		btnConfirPedido.setVisible(false);
+		tfNombreMed.setVisible(true);
+		tfFechaIncor.setVisible(true);
+		tfTipo.setVisible(true);
+		tfPrecio.setVisible(true);
+		tfCantidad.setVisible(true);
+		tfPpioActivo.setVisible(true);
+		btnIncrementarPedido.setVisible(false);
+		btnDisminuirPedido.setVisible(false);
+
 	}
 	
 	private void setActualizarON() {
@@ -241,6 +315,31 @@ public class FarmaciaView {
 		btnVentaDia.setVisible(false);
 		btnCancelarAct.setVisible(true);
 		btnGuardarAct.setVisible(true);
+		btnSalir.setVisible(false);
+	}
+	
+	private void setPedidoON() {
+		tfNombreMed.setVisible(false);
+		tfFechaIncor.setVisible(false);
+		tfTipo.setVisible(false);
+		tfPrecio.setVisible(false);
+		tfCantidad.setVisible(false);
+		tfPpioActivo.setVisible(false);
+		btnSiguiente.setVisible(false);
+		btnAnterior.setVisible(false);
+		btnActualizar.setVisible(false);
+		btnPedido.setVisible(false);
+		btnVenta.setVisible(false);
+		btnVentaDia.setVisible(false);
+		btnCancelarAct.setVisible(true);
+		btnGuardarAct.setVisible(false);
+		btnSalir.setVisible(false);
+		tfPedidoCant.setVisible(true);
+		tfPedidoCant.setEditable(true);
+		btnConfirPedido.setVisible(true);
+		btnIncrementarPedido.setVisible(true);
+		btnDisminuirPedido.setVisible(true);
+		btnDisminuirPedido.setEnabled(false);
 	}
 	
 	private void guardarCambios() {
@@ -252,5 +351,6 @@ public class FarmaciaView {
 		m.setCantidad(Integer.parseInt(tfCantidad.getText()));
 		m.setPpioActivo(tfPpioActivo.getText());
 		medicamentoDAO.updateMedicamento(m);
+		setPanelBase();
 	}
 } //CIERRE CLASE
