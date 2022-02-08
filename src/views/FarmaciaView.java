@@ -11,6 +11,7 @@ import dao.VentasDAO;
 import models.Medicamento;
 import models.Ventas;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -18,6 +19,10 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.SwingConstants;
+import java.awt.Color;
 
 public class FarmaciaView {
 
@@ -48,6 +53,15 @@ public class FarmaciaView {
 	private JButton btnIncrementarPedido;
 	private JButton btnDisminuirPedido;
 	private int modo;
+	private JLabel lblTitulo;
+	private JLabel lblNombre;
+	private JLabel lblPrincipioAct;
+	private JLabel lblPrecio;
+	private JLabel lblTipo;
+	private JLabel lblCantidad;
+	private JLabel lblFecha;
+	private JLabel lblTextIndica;
+	private JLabel lblFondo;
 
 	/**
 	 * Create the application.
@@ -74,106 +88,186 @@ public class FarmaciaView {
 	
 	private void setUIComponents() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 358);
+		frame.setBounds(100, 100, 557, 360);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		tfNombreMed = new JTextField();
-		tfNombreMed.setBounds(42, 97, 86, 20);
+		tfNombreMed.setFont(new Font("Tahoma", Font.ITALIC, 10));
+		tfNombreMed.setBounds(69, 97, 110, 30);
 		frame.getContentPane().add(tfNombreMed);
 		tfNombreMed.setColumns(10);
 		
 		tfFechaIncor = new JTextField();
-		tfFechaIncor.setBounds(260, 97, 86, 20);
+		tfFechaIncor.setFont(new Font("Tahoma", Font.ITALIC, 11));
+		tfFechaIncor.setBounds(356, 160, 110, 30);
 		frame.getContentPane().add(tfFechaIncor);
 		tfFechaIncor.setColumns(10);
 		
 		tfTipo = new JTextField();
-		tfTipo.setBounds(42, 150, 86, 20);
+		tfTipo.setFont(new Font("Tahoma", Font.ITALIC, 11));
+		tfTipo.setBounds(69, 160, 110, 30);
 		frame.getContentPane().add(tfTipo);
 		tfTipo.setColumns(10);
 		
 		tfPrecio = new JTextField();
-		tfPrecio.setBounds(260, 150, 86, 20);
+		tfPrecio.setFont(new Font("Tahoma", Font.ITALIC, 11));
+		tfPrecio.setBounds(356, 97, 110, 30);
 		frame.getContentPane().add(tfPrecio);
 		tfPrecio.setColumns(10);
 		
 		tfCantidad = new JTextField();
-		tfCantidad.setBounds(154, 150, 86, 20);
+		tfCantidad.setFont(new Font("Tahoma", Font.ITALIC, 11));
+		tfCantidad.setBounds(212, 160, 110, 30);
 		frame.getContentPane().add(tfCantidad);
 		tfCantidad.setColumns(10);
 		
 		tfPpioActivo = new JTextField();
-		tfPpioActivo.setBounds(154, 97, 86, 20);
+		tfPpioActivo.setFont(new Font("Tahoma", Font.ITALIC, 10));
+		tfPpioActivo.setBounds(212, 97, 110, 30);
 		frame.getContentPane().add(tfPpioActivo);
 		tfPpioActivo.setColumns(10);
 		
 		btnPedido = new JButton("Pedido");
-		btnPedido.setBounds(42, 246, 89, 23);
+		btnPedido.setBackground(Color.WHITE);
+		btnPedido.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 16));
+		btnPedido.setBounds(55, 239, 130, 30);
 		frame.getContentPane().add(btnPedido);
 		
 		btnVenta = new JButton("Venta");
+		btnVenta.setBackground(Color.WHITE);
+		btnVenta.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 16));
 		btnVenta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnVenta.setBounds(164, 246, 89, 23);
+		btnVenta.setBounds(203, 239, 130, 30);
 		frame.getContentPane().add(btnVenta);
 		
 		btnActualizar = new JButton("Actualizar");
-		btnActualizar.setBounds(305, 246, 89, 23);
+		btnActualizar.setBackground(Color.WHITE);
+		btnActualizar.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 16));
+		btnActualizar.setBounds(350, 239, 130, 30);
 		frame.getContentPane().add(btnActualizar);
 		
 		btnVentaDia = new JButton("Ventas del Dia");
+		btnVentaDia.setBackground(Color.WHITE);
+		btnVentaDia.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 16));
 		btnVentaDia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnVentaDia.setBounds(135, 285, 133, 23);
+		btnVentaDia.setBounds(186, 280, 160, 30);
 		frame.getContentPane().add(btnVentaDia);
 		
 		btnSalir = new JButton("Salir");
-		btnSalir.setBounds(10, 11, 89, 23);
+		btnSalir.setBackground(Color.WHITE);
+		btnSalir.setBounds(10, 11, 65, 23);
 		frame.getContentPane().add(btnSalir);
 		
 		btnAnterior = new JButton("<");
-		btnAnterior.setBounds(10, 192, 89, 23);
+		btnAnterior.setBackground(Color.WHITE);
+		btnAnterior.setFont(new Font("Tahoma", Font.BOLD, 10));
+		btnAnterior.setBounds(10, 65, 45, 160);
 		frame.getContentPane().add(btnAnterior);
 		
 		btnSiguiente = new JButton(">");
-		btnSiguiente.setBounds(335, 192, 89, 23);
+		btnSiguiente.setBackground(Color.WHITE);
+		btnSiguiente.setFont(new Font("Tahoma", Font.BOLD, 10));
+		btnSiguiente.setBounds(490, 65, 45, 160);
 		frame.getContentPane().add(btnSiguiente);
 		
 		btnGuardarAct = new JButton("Guardar");
-		btnGuardarAct.setBounds(305, 285, 89, 23);
+		btnGuardarAct.setBackground(Color.WHITE);
+		btnGuardarAct.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 16));
+		btnGuardarAct.setBounds(286, 239, 110, 30);
 		frame.getContentPane().add(btnGuardarAct);
 		
 		btnCancelarAct = new JButton("Cancelar");
-		btnCancelarAct.setBounds(36, 280, 89, 23);
+		btnCancelarAct.setBackground(Color.WHITE);
+		btnCancelarAct.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 16));
+		btnCancelarAct.setBounds(136, 239, 110, 30);
 		frame.getContentPane().add(btnCancelarAct);
 		
 		tfPedidoCant = new JTextField();
+		tfPedidoCant.setFont(new Font("Verdana", Font.BOLD, 30));
+		tfPedidoCant.setHorizontalAlignment(SwingConstants.CENTER);
 		tfPedidoCant.setEditable(false);
 		tfPedidoCant.setText("0");
-		tfPedidoCant.setBounds(167, 193, 86, 20);
+		tfPedidoCant.setBounds(212, 110, 110, 70);
 		frame.getContentPane().add(tfPedidoCant);
 		tfPedidoCant.setColumns(10);
 		
 		btnConfirPedido = new JButton("Confirmar");
-		btnConfirPedido.setBounds(240, 267, 89, 23);
+		btnConfirPedido.setBackground(Color.WHITE);
+		btnConfirPedido.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 16));
+		btnConfirPedido.setBounds(286, 239, 110, 30);
 		frame.getContentPane().add(btnConfirPedido);
 		
 		btnIncrementarPedido = new JButton("+");
-		btnIncrementarPedido.setBounds(109, 192, 54, 23);
+		btnIncrementarPedido.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		btnIncrementarPedido.setBackground(Color.WHITE);
+		btnIncrementarPedido.setBounds(79, 110, 90, 70);
 		frame.getContentPane().add(btnIncrementarPedido);
 		
 		btnDisminuirPedido = new JButton("-");
-		btnDisminuirPedido.setBounds(260, 192, 65, 23);
+		btnDisminuirPedido.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		btnDisminuirPedido.setBackground(Color.WHITE);
+		btnDisminuirPedido.setBounds(366, 110, 90, 70);
 		frame.getContentPane().add(btnDisminuirPedido);
 		
 		cbTipo = new JComboBox<String>();
-		cbTipo.setBounds(42, 167, 86, 22);
+		cbTipo.setFont(new Font("Tahoma", Font.ITALIC, 11));
+		cbTipo.setBounds(69, 160, 110, 30);
 		frame.getContentPane().add(cbTipo);
+		
+		lblTitulo = new JLabel("Almacen - Farmacia");
+		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTitulo.setFont(new Font("Trebuchet MS", Font.BOLD, 32));
+		lblTitulo.setBounds(0, 15, 534, 43);
+		frame.getContentPane().add(lblTitulo);
+		
+		lblNombre = new JLabel("Nombre");
+		lblNombre.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
+		lblNombre.setBounds(69, 76, 110, 23);
+		frame.getContentPane().add(lblNombre);
+		
+		lblPrincipioAct = new JLabel("Principio Act.");
+		lblPrincipioAct.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
+		lblPrincipioAct.setBounds(212, 76, 110, 23);
+		frame.getContentPane().add(lblPrincipioAct);
+		
+		lblPrecio = new JLabel("Precio");
+		lblPrecio.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
+		lblPrecio.setBounds(356, 76, 110, 23);
+		frame.getContentPane().add(lblPrecio);
+		
+		lblTipo = new JLabel("Tipo");
+		lblTipo.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
+		lblTipo.setBounds(69, 138, 110, 23);
+		frame.getContentPane().add(lblTipo);
+		
+		lblCantidad = new JLabel("Cantidad");
+		lblCantidad.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
+		lblCantidad.setBounds(212, 138, 110, 23);
+		frame.getContentPane().add(lblCantidad);
+		
+		lblFecha = new JLabel("Fecha Incor.");
+		lblFecha.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
+		lblFecha.setBounds(356, 138, 110, 23);
+		frame.getContentPane().add(lblFecha);
+		
+		lblTextIndica = new JLabel("Indica a continuaci\u00F3n la cantidad de productos");
+		lblTextIndica.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
+		lblTextIndica.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTextIndica.setBounds(69, 201, 397, 17);
+		frame.getContentPane().add(lblTextIndica);
+		
+		lblFondo = new JLabel("");
+		lblFondo.setBounds(0, 0, 555, 321);
+		frame.getContentPane().add(lblFondo);
+		lblFondo.setIcon(new ImageIcon(FarmaciaView.class.getResource("/img/fondoalmacen.jpg")));
+		
 		cbTipo.addItem("-");
 		cbTipo.addItem("Pildoras");
 		cbTipo.addItem("Jarabe");
@@ -377,7 +471,13 @@ public class FarmaciaView {
 		btnIncrementarPedido.setVisible(false);
 		btnDisminuirPedido.setVisible(false);
 		cbTipo.setVisible(false);
-
+		lblNombre.setVisible(true);
+		lblPrincipioAct.setVisible(true);
+		lblPrecio.setVisible(true);
+		lblTipo.setVisible(true);
+		lblCantidad.setVisible(true);
+		lblFecha.setVisible(true);
+		lblTextIndica.setVisible(false);
 	}
 	
 	private void setActualizarON() {
@@ -395,7 +495,7 @@ public class FarmaciaView {
 		btnGuardarAct.setVisible(true);
 		btnSalir.setVisible(false);
 		cbTipo.setVisible(true);
-
+		
 	}
 	
 	private void setPedidoON() {
@@ -421,6 +521,13 @@ public class FarmaciaView {
 		btnIncrementarPedido.setVisible(true);
 		btnDisminuirPedido.setVisible(true);
 		btnDisminuirPedido.setEnabled(false);
+		lblNombre.setVisible(false);
+		lblPrincipioAct.setVisible(false);
+		lblPrecio.setVisible(false);
+		lblTipo.setVisible(false);
+		lblCantidad.setVisible(false);
+		lblFecha.setVisible(false);
+		lblTextIndica.setVisible(true);
 	}
 	
 	private void guardarCambios() {

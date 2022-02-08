@@ -17,7 +17,7 @@ public class MedicamentoDAO {
 	
 	public ArrayList<Medicamento> getAll() {
 		final String QUERY = "SELECT id, nombre, ppio_activo, fecha, tipo, cantidad, precio"
-				+ " FROM medicamento";
+				+ " FROM medicamento ORDER BY nombre";
 		ArrayList<Medicamento> medicamentos = new ArrayList<Medicamento>();
 		try { 
 				 Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);

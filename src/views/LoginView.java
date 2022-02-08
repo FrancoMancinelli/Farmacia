@@ -13,12 +13,14 @@ import dao.UsuarioDAO;
 import models.Usuario;
 
 import javax.swing.JTextField;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
+import java.awt.Color;
 
 public class LoginView {
 
@@ -27,6 +29,8 @@ public class LoginView {
 	private JButton btnLogin;
 	private JPasswordField pfPIN;
 	private UsuarioDAO usuarioDAO;
+	private JLabel lblFondo;
+	private JLabel lblPin;
 
 
 	/**
@@ -49,23 +53,38 @@ public class LoginView {
 	
 	private void setUIComponents() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 350);
+		frame.setBounds(100, 100, 468, 346);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		lblTitulo = new JLabel("Farmacia");
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTitulo.setFont(new Font("Trebuchet MS", Font.BOLD, 30));
-		lblTitulo.setBounds(135, 36, 165, 62);
+		lblTitulo.setFont(new Font("Trebuchet MS", Font.BOLD, 50));
+		lblTitulo.setBounds(0, 31, 452, 78);
 		frame.getContentPane().add(lblTitulo);
 		
 		btnLogin = new JButton("Entrar");
-		btnLogin.setBounds(182, 192, 89, 23);
+		btnLogin.setFont(new Font("Trebuchet MS", Font.BOLD, 18));
+		btnLogin.setBackground(Color.WHITE);
+		btnLogin.setBounds(150, 223, 150, 40);
 		frame.getContentPane().add(btnLogin);
 		
 		pfPIN = new JPasswordField();
-		pfPIN.setBounds(161, 125, 139, 20);
+		pfPIN.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		pfPIN.setHorizontalAlignment(SwingConstants.CENTER);
+		pfPIN.setBounds(150, 151, 150, 40);
 		frame.getContentPane().add(pfPIN);
+				
+		lblPin = new JLabel("PIN:");
+		lblPin.setFont(new Font("Trebuchet MS", Font.BOLD, 18));
+		lblPin.setBounds(150, 123, 152, 30);
+		frame.getContentPane().add(lblPin);
+
+		lblFondo = new JLabel("");
+		lblFondo.setBounds(0, 0, 452, 417);
+		frame.getContentPane().add(lblFondo);
+		lblFondo.setIcon(new ImageIcon(LoginView.class.getResource("/img/fondologin.png")));
+
 	}
 	
 	private void setListeners() {
