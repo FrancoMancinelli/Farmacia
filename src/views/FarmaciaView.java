@@ -172,8 +172,12 @@ public class FarmaciaView {
 		
 		btnGuardarAct.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				guardarCambios();
-				setActualizarOFF();
+				int confirmar = JOptionPane.showConfirmDialog(btnGuardarAct,
+						"¿Estás seguro de que deseas guardar los cambios?");
+				if (confirmar == 0) { // Quiere guardar
+					guardarCambios();
+					setActualizarOFF();
+				}
 			}
 		});
 	}
